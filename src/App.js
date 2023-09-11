@@ -10,6 +10,8 @@ import HostLayout from './components/HostLayout';
 import Dashbaord from './pages/host/Dashbaord';
 import Income from './pages/host/Income';
 import Reviews from './pages/host/Reviews';
+import HostVans from './pages/host/HostVans';
+import HostVanDetail from './pages/host/HostVanDetail';
 
 function App() {
   return (
@@ -22,10 +24,12 @@ function App() {
             <Route index element={<Vans />} />
             <Route path=":id" element={<VanDetail />} />
           </Route>
-          <Route path="host" element={<HostLayout />} >
-            <Route index element={<Dashbaord />} />
+          <Route path="host"  element={<HostLayout />} >
+            <Route index  element={<Dashbaord />} />
             <Route path="income" element={<Income />} />
             <Route path="reviews" element={<Reviews />} />
+            <Route path="vans" element={<HostVans />} />
+            <Route path="vans/:id" element={<HostVanDetail />} />
           </Route>
         </Route>
       </Routes>
