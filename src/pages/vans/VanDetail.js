@@ -1,14 +1,24 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
+import axios from "axios"
+import '../../server'
 
 const VanDetail = () => {
     const params = useParams()
-    const [van, setVan] = React.useState(null)
+    const [van, setVan] = useState(null)
 
-    React.useEffect(() => {
-        fetch(`/api/vans/${params.id}`)
-            .then(res => res.json())
-            .then(data => setVan(data.vans))
+    useEffect(() => {
+
+        const fetchVan = async () => {
+            try {
+                const response = await axios.get(`/api/vans/${params.id}`)
+                setVan(response.data.vans)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        fetchVan()
     }, [params.id])
 
     return (
@@ -28,4 +38,4 @@ const VanDetail = () => {
         </div>
     )
 }
-export default  VanDetail;
+export default VanDetail;

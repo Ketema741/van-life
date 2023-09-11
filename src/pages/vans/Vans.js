@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../server";
+import "../../server";
 import axios from "axios";
 
 const Vans = () => {
@@ -11,7 +11,6 @@ const Vans = () => {
       try {
         const response = await axios.get('/api/vans');
         setVans(response.data.vans); 
-        console.log(response.data.vans); 
       } catch (error) {
         console.error("Error fetching data:", error);
       }
