@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams, useLocation } from "react-router-dom"
 import axios from "axios"
 import '../../server'
 
 const VanDetail = () => {
     const params = useParams()
+    const location = useLocation()
     const [van, setVan] = useState(null)
 
     useEffect(() => {
@@ -21,8 +22,17 @@ const VanDetail = () => {
         fetchVan()
     }, [params.id])
 
+    const search = location.state?.search || ""
+    const type = location.state?.type || "all"
+
+
     return (
         <div className="van-detail-container">
+            <Link
+                to={`..${search}`}
+                relative="path"
+                className="back-button"
+            >&larr; <span>Back to {type} vans</span></Link>
             {van ? (
                 <div className="van-detail">
                     <img src={van.imageUrl} alt="van-detail" />
