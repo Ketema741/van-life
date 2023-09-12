@@ -1,6 +1,13 @@
 import './App.css';
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { 
+  BrowserRouter as Router, 
+  RouterProvider, 
+  createBrowserRouter,
+  createRoutesFromElements,
+  Routes, 
+  Route 
+} from "react-router-dom"
 import Home from './pages/Home';
 import About from './pages/About';
 import VanDetail from './pages/vans/VanDetail';
@@ -18,10 +25,9 @@ import HostVanPhoto from './pages/host/HostVanPhoto';
 import NotFound from './pages/NotFound';
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />} >
+
+  const router = createBrowserRouter(createRoutesFromElements(
+    <Route path="/" element={<Layout />} >
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="vans">
@@ -41,8 +47,9 @@ function App() {
           </Route>
           <Route path="*" element={<NotFound />} />
         </Route>
-      </Routes>
-    </Router>
+  ));
+  return (
+    <RouterProvider router={router}/>
   )
 }
 
