@@ -1,11 +1,19 @@
-import React, { useState, useEffect } from "react"
-import { useParams, Link, NavLink, Outlet } from "react-router-dom"
-import axios from "axios"
+import React from "react"
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLoaderData,
+} from "react-router-dom"
+import { getVan } from "../../api"
 
 
-export default function HostVanDetail() {
-  const { id } = useParams()
-  const [currentVan, setCurrentVan] = useState(null)
+export const loader = ({ params }) => {
+  return getVan(params.id);
+}
+
+const HostVanDetail = () => {
+  const currentVan = useLoaderData();
 
   const activeStyles = {
     fontWeight: "bold",
@@ -13,18 +21,7 @@ export default function HostVanDetail() {
     color: "#161616"
   }
 
-  useEffect(() => {
-    const getHostVan = async () => {
-      const response = await axios.get(`/api/vans/${id}`)
-      setCurrentVan(response.data.vans);
 
-    }
-    getHostVan();
-  }, [id])
-
-  if (!currentVan) {
-    return <h1>Loading...</h1>
-  }
   return (
     <section>
       <Link
@@ -74,3 +71,4 @@ export default function HostVanDetail() {
   )
 }
 
+export default HostVanDetail;

@@ -1,3 +1,5 @@
+## React Router Data layer quiz
+
 1. When does the code in a loader function run?
 
 Before the route change happens and the component for that route loads
@@ -32,3 +34,27 @@ Before the route change happens and the component for that route loads
    3. Use the useLoaderData() hook to get the data from the loader
       function.
 
+
+
+## Protected Route quiz
+
+1. How did we change our route definitions in order to 
+   "protect" certain routes from an un-logged-in user?
+
+Wrapped the routes we wanted to protect in a Layout route
+that contains logic to redirect someone if they're not logged
+in
+   
+   
+2. What component can we use to automatically send someone
+   to a different route in our app?
+
+<Navigate to="/login" />
+
+
+3. What component can we render if the user IS logged in?
+
+<Outlet />
+
+useEffect load data after the component is rendered
+useDataLoader load data before the component is rendered

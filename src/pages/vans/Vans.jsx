@@ -9,7 +9,6 @@ export function loader() {
 
 const Vans = () => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [error, setError] = React.useState(null)
   const vans = useLoaderData()
 
 
@@ -30,7 +29,7 @@ const Vans = () => {
           type: typeFilter
         }}
       >
-        <img src={van.imageUrl} />
+        <img src={van.imageUrl} alt="van" />
         <div className="van-info">
           <h3>{van.name}</h3>
           <p>${van.price}<span>/day</span></p>
@@ -52,10 +51,7 @@ const Vans = () => {
   }
 
 
-  if (error) {
-    return <h1>There was an error: {error.message}</h1>
-  }
-
+ 
   return (
     <div className="van-list-container">
       <h1>Explore our van options</h1>

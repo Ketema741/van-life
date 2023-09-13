@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
-
+import { BsPersonCircle } from 'react-icons/bs'
 const Header = () => {
 
   const activeStyle = {
@@ -27,6 +27,9 @@ const Header = () => {
           to="/vans" >
           Vans
         </NavLink>
+        <Link to="login" className="login-link">
+          <BsPersonCircle className="login-icon" />
+        </Link>
       </nav>
     </header>
   )
