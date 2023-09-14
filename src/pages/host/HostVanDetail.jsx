@@ -1,11 +1,22 @@
-import React, { useState, useEffect } from "react"
-import { useParams, Link, NavLink, Outlet } from "react-router-dom"
-import axios from "axios"
+import React, { Suspense } from "react"
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLoaderData,
+  defer,
+  Await,
+} from "react-router-dom"
+import { getVan } from "../../api"
+import { requireAuth } from "../../utils"
 
+export const loader = async ({ params, request }) => {
+  await requireAuth(request)
+  return defer({ van: getVan(params.id) });
+}
 
-export default function HostVanDetail() {
-  const { id } = useParams()
-  const [currentVan, setCurrentVan] = useState(null)
+const HostVanDetail = () => {
+  const dataPromise = useLoaderData();
 
   const activeStyles = {
     fontWeight: "bold",
@@ -13,26 +24,9 @@ export default function HostVanDetail() {
     color: "#161616"
   }
 
-  useEffect(() => {
-    const getHostVan = async () => {
-      const response = await axios.get(`/api/vans/${id}`)
-      setCurrentVan(response.data.vans);
-
-    }
-    getHostVan();
-  }, [id])
-
-  if (!currentVan) {
-    return <h1>Loading...</h1>
-  }
-  return (
-    <section>
-      <Link
-        to=".."
-        relative="path"
-        className="back-button"
-      >&larr; <span>Back to all vans</span></Link>
-
+  function renderVanElement(van) {
+    const currentVan = van;
+    return (
       <div className="host-van-detail-layout-container">
         <div className="host-van-detail">
           <img src={currentVan.imageUrl} alt="van" />
@@ -70,7 +64,27 @@ export default function HostVanDetail() {
         </nav>
         <Outlet context={{ currentVan }} />
       </div>
+    )
+  }
+
+  return (
+    <section>
+      <Link
+        to=".."
+        relative="path"
+        className="back-button"
+      >
+        &larr; <span>Back to all vans</span>
+      </Link>
+
+      <Suspense fallback={<h1>wait bitch am loading... it!</h1>}>
+
+        <Await resolve={dataPromise.van}>
+          {renderVanElement}
+        </Await>
+      </Suspense>
     </section>
   )
 }
 
+export default HostVanDetail;
